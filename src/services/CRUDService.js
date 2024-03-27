@@ -1,0 +1,22 @@
+const connection = require("../config/database");
+
+const getAllUser = async () => {
+  let [results, fields] = await (await connection).query("SELECT * FROM Users");
+  return results;
+};
+
+const getUserById = async (userId) => {
+  let [results, fields] = await (
+    await connection
+  ).query("SELECT * FROM Users WHERE id = ?", [userId]);
+  // console.log(results);
+
+  // chuyen arr sang 1 phan tu
+  let user = results && results.length > 0 ? results[0] : {};
+  return user;
+};
+
+module.exports = {
+  getAllUser,
+  getUserById,
+};
