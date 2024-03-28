@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update A User</title>
+    <title>Delete A User</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
@@ -13,28 +13,20 @@
         <a href="/create">Create Users</a>
     </div>
 
-    <form class="form" action="/update-user" method="post">
+    <form class="form" action="/delete-user" method="post">
         <!-- <%= JSON.stringify(userEdit) %> -->
         <fieldset>
-            <legend><b>Update a user</b></legend>
+            <legend><b>Delete a user</b></legend>
             <div class="input-group d-none">
                 <label>Id: </label>
                 <input type="text" name="userId" value="<%= userEdit.id %>">
             </div>
             <div class="input-group">
-                <label>Email: </label>
-                <input type="text" name="email" value="<%= userEdit.email %>">
-            </div>
-            <div class="input-group">
-                <label>Name: </label>
-                <input type="text" name="name" value="<%= userEdit.username %>">
-            </div>
-            <div class="input-group">
-                <label>City: </label>
-                <input type="text" name="city" value="<%= userEdit.city %>">
+                <label>Are you sure to delete this user with Email: </label>
+                <input type="text" name="email" value="<%= userEdit.email %>" disabled>
             </div>
             <div class="btn">
-                <button>Update</button>
+                <button>Confirm</button>
                 <a href="/" class="btn-back">Cancel</a>
             </div>
         </fieldset>

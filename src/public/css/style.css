@@ -59,6 +59,7 @@ fieldset {
 }
 
 /* table */
+
 #customers {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
@@ -98,7 +99,8 @@ fieldset {
   align-items: center;
   column-gap: 10px;
 }
-.action-btn .btn {
+.action-btn .btn,
+.btn-back {
   outline: none;
   border: none;
   background-color: #2ab9e9;
@@ -110,10 +112,23 @@ fieldset {
   border-radius: 5px;
   cursor: pointer;
   text-decoration: none;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.btn-back {
+  background-color: #eee;
+  margin-left: 15px;
+  padding: 10px 20px;
+  color: #333;
+  border: 1px solid #ccc;
 }
 .action-btn .btn.secondary {
   background-color: #ff6651;
 }
-.action-btn .btn:hover {
+.action-btn .btn:hover,
+.action-btn .btn-back:hover {
   transform: scale(1.1);
+}
+
+.d-none {
+  display: none;
 }

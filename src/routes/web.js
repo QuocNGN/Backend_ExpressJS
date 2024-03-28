@@ -7,6 +7,9 @@ const {
   getUserFromDB,
   getCreatePage,
   getUpdatePage,
+  postUpdateUser,
+  postDeleteUser,
+  postHandleRemoveUser,
 } = require("../controllers/homeController");
 const router = express.Router();
 
@@ -19,5 +22,11 @@ router.get("/create", getCreatePage);
 router.post("/create-user", postCreateUser);
 
 router.get("/update/:id", getUpdatePage);
+router.post("/update-user", postUpdateUser);
+
+// select right id to delete when click form button
+router.post("/delete-user/:id", postDeleteUser);
+// confirm to delete and direct to Remove The Data from DATABASE
+router.post("/delete-user", postHandleRemoveUser);
 
 module.exports = router;
