@@ -23,15 +23,16 @@ configViewEngine(app);
 //  Khai bao route
 app.use("/", webRoutes);
 
-//  test connection
-
-// Simple query
-// connection.query("SELECT * FROM Users", function (err, results, fields) {
-//   console.log(">>> results = ", results);
-//   // console.log(">>> fields =", fields);
-// });
-
-//  Chay server
-app.listen(port, hostname, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+// self running function
+(async () => {
+  try {
+    //  test connection
+    await connection();
+    //  Chay server
+    app.listen(port, hostname, () => {
+      console.log(`Backend app listening on port ${port}`);
+    });
+  } catch (err) {
+    console.log(">>> Error connect to DB: ", err);
+  }
+})();
