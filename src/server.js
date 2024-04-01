@@ -4,11 +4,7 @@ const configViewEngine = require("./config/viewEngine");
 const webRoutes = require("./routes/web");
 const connection = require("./config/database");
 
-// console.log(">>> Check ENV: ", process.env);
-
 const app = express();
-// const port = 8081;
-// const hostname = "localhost";
 const port = process.env.PORT || 8888;
 const hostname = process.env.HOST_NAME;
 

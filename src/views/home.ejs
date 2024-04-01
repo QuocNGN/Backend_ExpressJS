@@ -23,27 +23,29 @@
             <th>City</th>
             <th>Action</th>
         </tr>
-        <% listUsers.forEach((user)=> { %>
-            <tr>
-                <td>#<%= user.id %>
-                </td>
-                <td>
-                    <%= user.username %>
-                </td>
-                <td class="mail">
-                    <%= user.email %>
-                </td>
-                <td>
-                    <%= user.city %>
-                </td>
-                <td class="action-btn">
-                    <a href="/Update/<%= user.id %>" class="btn">Edit</a>
-                    <form action="/delete-user/<%= user.id %>" method="POST">
-                        <button class="btn secondary">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            <% }); %>
+        <% var count=1; %>
+            <% listUsers.forEach((user)=> { %>
+                <tr>
+                    <td>#<%= count %>
+                    </td>
+                    <% count++; %>
+                        <td>
+                            <%= user.name %>
+                        </td>
+                        <td class="mail">
+                            <%= user.email %>
+                        </td>
+                        <td>
+                            <%= user.city %>
+                        </td>
+                        <td class="action-btn">
+                            <a href="/Update/<%= user.id %>" class="btn">Edit</a>
+                            <form action="/delete-user/<%= user.id %>" method="POST">
+                                <button class="btn secondary">Delete</button>
+                            </form>
+                        </td>
+                </tr>
+                <% }); %>
 
     </table>
 
