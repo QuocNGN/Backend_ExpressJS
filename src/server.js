@@ -2,13 +2,10 @@ require("dotenv").config();
 const express = require("express");
 const configViewEngine = require("./config/viewEngine");
 const webRoutes = require("./routes/web");
+const apiRoutes = require("./routes/api");
 const connection = require("./config/database");
 
-// console.log(">>> Check ENV: ", process.env);
-
 const app = express();
-// const port = 8081;
-// const hostname = "localhost";
 const port = process.env.PORT || 8888;
 const hostname = process.env.HOST_NAME;
 
@@ -22,16 +19,18 @@ configViewEngine(app);
 
 //  Khai bao route
 app.use("/", webRoutes);
+app.use("/v1/api/", apiRoutes);
 
-//  test connection
-
-// Simple query
-// connection.query("SELECT * FROM Users", function (err, results, fields) {
-//   console.log(">>> results = ", results);
-//   // console.log(">>> fields =", fields);
-// });
-
-//  Chay server
-app.listen(port, hostname, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+// self running function
+(async () => {
+  try {
+    //  test connection
+    await connection();
+    //  Chay server
+    app.listen(port, hostname, () => {
+      console.log(`Backend app listening on port ${port}`);
+    });
+  } catch (err) {
+    console.log(">>> Error connect to DB: ", err);
+  }
+})();

@@ -1,4 +1,5 @@
 const connection = require("../config/database");
+const User = require("../models/User");
 const {
   getAllUser,
   getUserById,
@@ -7,7 +8,7 @@ const {
 } = require("../services/CRUDService");
 
 const getHomepage = async (req, res) => {
-  let results = await getAllUser();
+  let results = await User.find({});
   return res.render("home.ejs", { listUsers: results });
 };
 
@@ -47,32 +48,16 @@ const postCreateUser = async (req, res) => {
     city
   );
 
-  // connection.query(
-  //   `INSERT INTO Users (email, username, city)
-  //   VALUES (?, ?, ?);`,
-  //   [email, name, city],
-  //   function (err, results) {
-  //     console.log(results);
+  // const [results, fields] = await (
+  //   await connection
+  // ).execute(`INSERT INTO Users (email, username, city) VALUES (?, ?, ?);`, [
+  //   email,
+  //   name,
+  //   city,
+  // ]);
 
-  //     res.send("Create user SUCCESS!!!");
-  //   }
-  // );
-
-  const [results, fields] = await (
-    await connection
-  ).execute(`INSERT INTO Users (email, username, city) VALUES (?, ?, ?);`, [
-    email,
-    name,
-    city,
-  ]);
-  console.log(">>> check result: ", results);
-  // res.send("Create user SUCCESS!!!");
+  await User.create({ email, name, city });
   res.redirect("/");
-
-  // const [results, fields] = await connection
-  //   .query("SELECT * FROM Users")
-  //   .stream();
-  // console.log(">>> check result: ", results);
 };
 
 const getCreatePage = (req, res) => {
@@ -81,9 +66,12 @@ const getCreatePage = (req, res) => {
 
 const getUpdatePage = async (req, res) => {
   const userId = req.params.id;
-  // console.log(">> req.param: ", req.params, userId);
-  let user = await getUserById(userId);
-  // console.log(user);
+
+  // findById('123') => {} : so it lay 1
+  // find({}) => [] : lay so nhieu
+  let user = await User.findById(userId).exec();
+  console.log(user);
+
   res.render("edit.ejs", { userEdit: user });
 };
 
@@ -101,21 +89,27 @@ const postUpdateUser = async (req, res) => {
     userId
   );
 
-  await updateUserById(email, name, city, userId);
+  // await updateUserById(email, name, city, userId);
+  await User.updateOne(
+    { _id: userId },
+    { name: name, email: email, city: city }
+  );
 
   res.redirect("/");
 };
 
 const postDeleteUser = async (req, res) => {
   const userId = req.params.id;
-  let user = await getUserById(userId);
+  let user = await User.findById(userId).exec();
+  console.log(user);
   res.render("delete.ejs", { userEdit: user });
 };
 
 const postHandleRemoveUser = async (req, res) => {
   let id = req.body.userId;
 
-  await deleteUserById(id);
+  let result = await User.deleteOne({ _id: id });
+  console.log(">>> Check result: ", result);
 
   res.redirect("/");
 };
